@@ -26,4 +26,15 @@
   .play-gradient {
     background-image: linear-gradient(to bottom, #fe71fe, #7199ff);
   }
+
+  .back-gradient {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .heading-gradient {
+    background-image: linear-gradient(to bottom, #67b6ff, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
