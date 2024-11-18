@@ -16,6 +16,9 @@
 }
 
 @layer components {
+  .menu-wrapper {
+    background-color: rgba(36, 98, 255, 0.5);
+  }
   .menu-background {
     background-color: rgba(38, 22, 118, 0.5);
   }

@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-[url('/assets/images/background-mobile.svg')] bg-no-repeat bg-cover h-full md:bg-[url('/assets/images/background-tablet.svg')] lg:bg-[url('/assets/images/background-desktop.svg')]">
+      <body className="bg-[url('/assets/images/background-mobile.svg')] bg-no-repeat bg-cover h-screen md:bg-[url('/assets/images/background-tablet.svg')] lg:bg-[url('/assets/images/background-desktop.svg')]">
         {children}
       </body>
     </html>
