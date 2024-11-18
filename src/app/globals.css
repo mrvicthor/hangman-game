@@ -37,4 +37,11 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  @media (64rem <= width) {
+    .card-description {
+      max-width: 25ch;
+      color: red;
+    }
+  }
 }
