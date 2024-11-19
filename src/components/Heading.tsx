@@ -1,16 +1,12 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-
-const Heading = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return <div>Loading...</div>;
-  return <h1>This is a heading</h1>;
+type Props = {
+  text: string;
+};
+const Heading = ({ text }: Props) => {
+  return (
+    <h1 className="heading-gradient text-4xl md:text-6xl lg:text-9xl font-bold">
+      {text}
+    </h1>
+  );
 };
 
 export default Heading;
