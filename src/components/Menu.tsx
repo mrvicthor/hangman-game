@@ -1,9 +1,59 @@
+"use client";
+import { useEffect, useState, useRef, RefCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/assets/images/logo.svg";
 import play from "../../public/assets/images/icon-play.svg";
 
 const Menu = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const menuItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  const setMenuItemsRef: (index: number) => RefCallback<HTMLAnchorElement> =
+    (index) => (el) => {
+      menuItemsRef.current[index] = el;
+    };
+  const menuItems = [
+    { href: "/category", label: "Play" },
+    { href: "/howToPlay", label: "How to Play" },
+  ];
+  useEffect(() => {
+    setMounted(true);
+    const handler = (e: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(e.key)) {
+        e.preventDefault();
+      }
+      switch (e.key) {
+        case "ArrowUp":
+        case "ArrowRight":
+          setActiveIndex((prev) =>
+            prev === menuItems.length - 1 ? 0 : prev + 1
+          );
+
+          break;
+        case "ArrowDown":
+        case "ArrowLeft":
+          setActiveIndex((prev) =>
+            prev === 0 ? menuItems.length - 1 : prev - 1
+          );
+
+          break;
+        case "Enter":
+          menuItemsRef.current[activeIndex]?.click();
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [menuItems.length]);
+
+  useEffect(() => {
+    menuItemsRef.current[activeIndex]?.focus();
+  }, [activeIndex]);
+
+  if (!mounted) return null;
   return (
     <>
       <div className="flex justify-center items-center relative top-[8rem]">
@@ -23,6 +73,7 @@ const Menu = () => {
               <div className="h-[10rem] w-[10rem] md:h-[12.5rem] cursor-pointer md:w-[12.5rem] border-x-2 border-[#0b1524] border-b-8 border-t flex items-center justify-center rounded-full relative bg-[#8424EC]">
                 <Link
                   href="/category"
+                  ref={setMenuItemsRef(0)}
                   className="h-[9rem] w-[9rem] md:h-[11.5rem] md:w-[11.5rem] absolute top-0 play-gradient rounded-full flex items-center justify-center"
                 >
                   <Image
@@ -36,6 +87,7 @@ const Menu = () => {
               </div>
               <Link
                 href="/howToPlay"
+                ref={setMenuItemsRef(1)}
                 className="bg-[#2463ff] animate-bounce flex items-center justify-center w-[16.25rem] rounded-3xl text-white text-xl border-t-8 border-[#0680FA] font-bold uppercase py-4 tracking-wide"
               >
                 how to play
