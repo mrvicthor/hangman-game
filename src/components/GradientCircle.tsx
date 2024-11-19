@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -6,10 +7,27 @@ interface Props {
   imageSrc: string;
 }
 const GradientCircle = ({ imageSrc }: Props) => {
+  const backButtonRef = useRef<HTMLAnchorElement | null>(null);
+  useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(e.key)) {
+        e.preventDefault();
+      }
+      if (e.key === "Enter") {
+        backButtonRef.current?.click();
+      }
+    };
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
+  }, []);
+  useEffect(() => {
+    backButtonRef.current?.focus();
+  }, []);
   return (
     <div className="cursor-pointer h-[2.5rem] w-[2.5rem] md:h-[4rem] md:w-[4rem] lg:h-[5.875rem] lg:w-[5.875rem] rounded-full play-gradient relative flex items-center justify-center">
       <Link
         href="/"
+        ref={backButtonRef}
         className="flex items-center justify-center h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] lg:h-[4.875rem] lg:w-[4.875rem] rounded-full absolute top-0 play-gradient back-gradient "
       >
         <Image
