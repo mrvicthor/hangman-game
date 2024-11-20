@@ -7,3 +7,8 @@ export async function getCategories() {
     console.log("Error", err);
   }
 }
+
+export async function getBoardByCategory(category: string) {
+  const data = await getCategories();
+  return JSON.stringify(data.categories[category]);
+}
