@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GradientCircle from "./GradientCircle";
 import Heading from "./Heading";
 
@@ -12,6 +12,7 @@ type Props = {
 const CategoryClient = ({ categories }: Props) => {
   const categoryRefs = useRef<HTMLButtonElement[]>([]);
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState(false);
 
@@ -54,6 +55,12 @@ const CategoryClient = ({ categories }: Props) => {
         break;
     }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <section className="container mx-auto px-6">
