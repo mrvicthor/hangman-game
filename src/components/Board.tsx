@@ -2,9 +2,9 @@ import React from "react";
 
 const Board = () => {
   return (
-    <div>
+    <section>
       <p>Board</p>
-    </div>
+    </section>
   );
 };
 
