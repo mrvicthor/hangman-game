@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import Image from "next/image";
@@ -22,6 +23,9 @@ const BoardHeader = ({ title }: BoardHeaderProps) => {
               min={0}
               max={100}
               value={100}
+              onChange={() => {
+                console.log("change");
+              }}
               className=" outline-none border-none focus:outline-none focus:border-none w-full "
             />
           </div>
