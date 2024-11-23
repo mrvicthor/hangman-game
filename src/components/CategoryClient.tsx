@@ -63,7 +63,7 @@ const CategoryClient = ({ categories }: Props) => {
   if (!isMounted) return null;
 
   return (
-    <section className="container mx-auto px-6">
+    <section className="container px-6">
       <div className="flex items-center gap-16 md:gap-64  mt-16">
         <GradientCircle imageSrc="/assets/images/icon-back.svg" />
         <Heading text="Pick a Category" />
