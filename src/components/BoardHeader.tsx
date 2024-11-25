@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import MenuButton from "./MenuButton";
@@ -8,6 +8,11 @@ type BoardHeaderProps = {
   title: string;
 };
 const BoardHeader = ({ title }: BoardHeaderProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
   return (
     <header>
       <nav className="flex md:gap-12 gap-6 items-center justify-between">
