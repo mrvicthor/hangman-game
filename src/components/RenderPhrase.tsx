@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 type Props = {
   phrase: string;
   hiddenLetters: Set<string>;
@@ -12,7 +10,6 @@ const RenderPhrase = ({
   hiddenLetters,
   shouldShowLetter,
 }: Props): JSX.Element[] => {
-  useEffect(() => {}, [hiddenLetters.size]);
   return phrase
     .toUpperCase()
     .split(" ")

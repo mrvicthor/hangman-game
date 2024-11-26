@@ -6,8 +6,10 @@ import MenuButton from "./MenuButton";
 
 type BoardHeaderProps = {
   title: string;
+  health: number;
 };
-const BoardHeader = ({ title }: BoardHeaderProps) => {
+const BoardHeader = ({ title, health }: BoardHeaderProps) => {
+  console.log(health, "vic");
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -21,17 +23,10 @@ const BoardHeader = ({ title }: BoardHeaderProps) => {
           {title}
         </h1>
         <div className="flex items-center gap-4">
-          <div className="bg-white rounded-xl flex items-center px-4 py-1 lg:w-[15rem] md:w-[10rem] w-[3.5625rem]">
-            <input
-              type="range"
-              id="heart"
-              min={0}
-              max={100}
-              value={100}
-              onChange={() => {
-                console.log("change");
-              }}
-              className=" outline-none border-none focus:outline-none focus:border-none w-full "
+          <div className="bg-white rounded-xl flex items-center px-4 py-2 lg:w-[15rem] md:w-[10rem] w-[3.5625rem]">
+            <div
+              className={` rounded-xl bg-[#261676] h-2`}
+              style={{ width: `${health}%` }}
             />
           </div>
           <label htmlFor="heart">

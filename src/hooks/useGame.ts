@@ -9,6 +9,7 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
   const [gameStatus, setGameStatus] = useState<GameStatus>("playing");
   const [hiddenLetters, setHiddenLetters] = useState<Set<string>>(new Set());
   const [phrase, setPhrase] = useState<string>("");
+  const [progressBarWidth, setProgressBarWidth] = useState(100);
 
   const startNewGame = (): void => {
     const randomPhrase = getRandomItemFromCategory(JSON.parse(data));
@@ -26,6 +27,7 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
     setPhrase(randomPhrase.name);
     setMistakes(0);
     setGameStatus("playing");
+    setProgressBarWidth(100);
   };
 
   const handleGuess = (letter: string): void => {
@@ -33,16 +35,20 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
     const newGuessedLetters = new Set(guessedLetters);
     newGuessedLetters.add(letter);
     hiddenLetters.delete(letter);
-    const isWrongGuess =
-      !hiddenLetters.has(letter) || phrase.toLowerCase().includes(letter);
-    const newMistakes = isWrongGuess ? mistakes + 1 : mistakes;
+    const isWrongGuess = !phrase.toUpperCase().includes(letter);
+    if (isWrongGuess) {
+      const newMistakes = isWrongGuess ? mistakes + 1 : mistakes;
+      setProgressBarWidth((prevState) =>
+        Math.max(0, prevState - 100 / MAX_MISTAKES)
+      );
+      setMistakes(newMistakes);
+      if (mistakes >= MAX_MISTAKES) {
+        setGameStatus("lost");
+        alert("You lost");
+      }
+    }
     setGuessedLetters(newGuessedLetters);
     setHiddenLetters(hiddenLetters);
-    setMistakes(newMistakes);
-    if (newMistakes >= MAX_MISTAKES) {
-      setGameStatus("lost");
-      alert("You lost");
-    }
   };
 
   const shouldShowLetter = (letter: string): boolean => {
@@ -57,5 +63,6 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
     shouldShowLetter,
     startNewGame,
     phrase,
+    progressBarWidth,
   };
 };
