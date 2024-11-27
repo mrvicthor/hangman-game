@@ -9,6 +9,7 @@ interface Props {
 const GradientCircle = ({ imageSrc }: Props) => {
   const backButtonRef = useRef<HTMLAnchorElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+  console.log(isFocused, "is focused");
   const handleFocus = () => {
     setIsFocused(true);
   };
@@ -29,7 +30,6 @@ const GradientCircle = ({ imageSrc }: Props) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       onKeyDown={handleKeydown}
-      tabIndex={isFocused ? 1 : 0}
     >
       <span
         role="button"

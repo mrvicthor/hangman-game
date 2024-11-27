@@ -1,44 +1,35 @@
 import { useCallback, useState } from "react";
 
-type Props = {
-  totalResults: number;
-  onActivate: (index: number) => void;
-  hasBackButton?: boolean;
-  itemsRef: React.RefObject<HTMLButtonElement[]>;
-  backButtonRef: React.RefObject<HTMLAnchorElement>;
-};
-export const useKeyboardNavigation = ({
-  totalResults,
-  onActivate,
-  hasBackButton = true,
-  itemsRef,
-  backButtonRef,
-}: Props) => {
+// type Props = {
+//   totalResults: number;
+//   itemsRef: React.RefObject<HTMLButtonElement[]>;
+// };
+export const useKeyboardNavigation = (
+  totalResults: number,
+  itemsRef: React.RefObject<HTMLButtonElement[]>
+) => {
   const [focusedIndex, setFocusedIndex] = useState(0);
 
   const focusElement = useCallback(
     (index: number) => {
-      if (index === -1 && backButtonRef.current) {
-        backButtonRef.current.focus();
-      } else if (index >= 0 && itemsRef?.current?.[index]) {
+      if (index >= 0 && itemsRef?.current?.[index]) {
         itemsRef.current[index].focus();
       }
     },
-    [backButtonRef, itemsRef]
+    [itemsRef]
   );
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       const { key } = e;
-      const adjustTotalItems = hasBackButton ? totalResults + 1 : totalResults;
       const navigate = (direction: "next" | "prev"): number => {
         e?.preventDefault();
         let newIndex: number;
         if (direction === "next") {
           console.log("next");
-          newIndex = focusedIndex < adjustTotalItems - 1 ? focusedIndex + 1 : 0;
+          newIndex = focusedIndex < totalResults - 1 ? focusedIndex + 1 : 0;
         } else {
-          newIndex = focusedIndex > 0 ? focusedIndex - 1 : adjustTotalItems - 1;
+          newIndex = focusedIndex > 0 ? focusedIndex - 1 : totalResults - 1;
         }
         console.log(focusedIndex);
         setFocusedIndex(newIndex);
@@ -57,10 +48,11 @@ export const useKeyboardNavigation = ({
           break;
         case "Enter":
         case " ":
-          if (onActivate) {
+          if (itemsRef.current) {
             e.preventDefault();
-            onActivate(focusedIndex);
+            itemsRef.current[focusedIndex].click();
           }
+
           break;
         case "Escape":
           e.preventDefault();
@@ -69,12 +61,10 @@ export const useKeyboardNavigation = ({
           break;
       }
     },
-    [focusedIndex, hasBackButton, totalResults, onActivate, focusElement]
+    [focusedIndex, totalResults, itemsRef, focusElement]
   );
   return {
     focusedIndex,
-    setFocusedIndex,
     handleKeyDown,
-    focusElement,
   };
 };

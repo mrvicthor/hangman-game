@@ -5,17 +5,20 @@ type SquareProps = {
   value: string;
   onSquareClick?: () => void;
   classes?: string;
+  tabIndex: number;
 };
-const Square = ({ value, onSquareClick, classes }: SquareProps) => {
+const Square = ({ value, onSquareClick, classes, tabIndex }: SquareProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
   if (!mounted) return null;
+
   return (
     <button
-      className={`bg-white rounded-xl ${classes} w-[3.8056rem] sm:w-[5.25rem] hover:bg-[#2463ff] hover:text-white transition-all duration-300 lg:w-[6.8125rem] lg:h-[5.25rem] text-[2.25rem] md:text-[3.625rem] text-[#261676]`}
+      tabIndex={tabIndex}
+      className={`bg-white rounded-xl ${classes} max-w-[3.8056rem] md:max-w-[5.25rem] hover:bg-[#2463ff] hover:text-white transition-all duration-300 lg:max-w-[6.8125rem] lg:min-w-[6rem] lg:h-[5.25rem] text-[2.25rem] md:text-[3.625rem] text-[#261676]`}
       onClick={onSquareClick}
     >
       {value}

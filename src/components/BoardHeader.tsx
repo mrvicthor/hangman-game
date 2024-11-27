@@ -23,9 +23,9 @@ const BoardHeader = ({ title, health }: BoardHeaderProps) => {
           {title}
         </h1>
         <div className="flex items-center gap-4">
-          <div className="bg-white rounded-xl flex items-center px-4 py-2 lg:w-[15rem] md:w-[10rem] w-[3.5625rem]">
+          <div className="bg-white rounded-xl flex items-center px-2 md:px-4 py-2 lg:w-[15rem] md:w-[10rem] w-[3.5625rem]">
             <div
-              className={` rounded-xl bg-[#261676] h-2`}
+              className={`rounded-xl bg-[#261676] h-2`}
               style={{ width: `${health}%` }}
             />
           </div>

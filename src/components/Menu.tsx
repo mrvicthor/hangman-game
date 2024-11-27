@@ -18,8 +18,12 @@ const Menu = () => {
     { href: "/category", label: "Play" },
     { href: "/howToPlay", label: "How to Play" },
   ];
+
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(e.key)) {
         e.preventDefault();
@@ -47,7 +51,7 @@ const Menu = () => {
 
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [menuItems.length]);
+  }, [menuItems.length, activeIndex]);
 
   useEffect(() => {
     menuItemsRef.current[activeIndex]?.focus();

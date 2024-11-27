@@ -13,9 +13,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <section className="container px-6 flex flex-col gap-12">
       {/* <BoardHeader title={title} /> */}
 
-      <div className="">
-        <Board data={data} title={title} />
-      </div>
+      <Board data={data} title={title} />
     </section>
   );
 };
