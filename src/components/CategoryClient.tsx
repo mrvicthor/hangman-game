@@ -66,7 +66,10 @@ const CategoryClient = ({ categories }: Props) => {
     <section className="container px-6">
       <div className="flex items-center gap-16 md:gap-64  mt-16">
         <GradientCircle imageSrc="/assets/images/icon-back.svg" />
-        <Heading text="Pick a Category" />
+        <Heading
+          text="Pick a Category"
+          classes="text-4xl md:text-6xl lg:text-9xl"
+        />
       </div>
       <div
         className="grid grid-cols-1 mt-16 gap-4 md:gap-10 lg:grid-cols-3 md:grid-cols-2"

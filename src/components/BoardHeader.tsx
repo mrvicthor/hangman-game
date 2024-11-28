@@ -9,7 +9,6 @@ type BoardHeaderProps = {
   health: number;
 };
 const BoardHeader = ({ title, health }: BoardHeaderProps) => {
-  console.log(health, "vic");
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);

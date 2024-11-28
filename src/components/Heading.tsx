@@ -1,12 +1,9 @@
 type Props = {
   text: string;
+  classes: string;
 };
-const Heading = ({ text }: Props) => {
-  return (
-    <h1 className="heading-gradient text-4xl md:text-6xl lg:text-9xl font-bold">
-      {text}
-    </h1>
-  );
+const Heading = ({ text, classes }: Props) => {
+  return <h1 className={`heading-gradient ${classes} font-bold`}>{text}</h1>;
 };
 
 export default Heading;

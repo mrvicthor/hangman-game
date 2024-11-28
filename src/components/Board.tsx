@@ -30,6 +30,7 @@ const Board = ({ data, title }: Props) => {
     startNewGame,
     phrase,
     progressBarWidth,
+    gameStatus,
   } = useGame(data, MAX_MISTAKES);
 
   console.log(phrase);
@@ -136,7 +137,7 @@ const Board = ({ data, title }: Props) => {
           </div>
         </div>
       </section>
-      <MenuModal handleNewGame={startNewGame} />
+      <MenuModal handleNewGame={startNewGame} gameStatus={gameStatus} />
     </MenuProvider>
   );
 };

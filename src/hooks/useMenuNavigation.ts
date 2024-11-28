@@ -4,8 +4,13 @@ import { MutableRefObject, useEffect, useState } from "react";
 type Props = {
   totalItems: number;
   menuItemsRef?: MutableRefObject<(HTMLAnchorElement | null)[]>;
+  buttonsControlRef?: React.RefObject<(HTMLButtonElement | null)[]>;
 };
-export const useMenuNavigation = ({ totalItems, menuItemsRef }: Props) => {
+export const useMenuNavigation = ({
+  totalItems,
+  menuItemsRef,
+  buttonsControlRef,
+}: Props) => {
   const pathname = usePathname();
   console.log(pathname, "path");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -28,7 +33,8 @@ export const useMenuNavigation = ({ totalItems, menuItemsRef }: Props) => {
           break;
         case "Enter":
           if (pathname === "/") menuItemsRef?.current[activeIndex]?.click();
-
+          if (buttonsControlRef?.current)
+            buttonsControlRef?.current[activeIndex]?.click();
           break;
       }
     };
