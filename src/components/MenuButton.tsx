@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useRef, KeyboardEvent } from "react";
 import Image from "next/image";
+import { useMenu } from "@/hooks/useMenu";
 interface Props {
   imageSrc: string;
 }
 const MenuButton = ({ imageSrc }: Props) => {
+  const { setShowMenu, showMenu } = useMenu();
+  const menuRef = useRef<HTMLButtonElement | null>(null);
+  const handleKeydown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (menuRef) {
+      menuRef.current?.click();
+    }
+  };
   return (
     <button
-      //   ref={backButtonRef}
+      ref={menuRef}
       className="cursor-pointer h-[2.5rem] w-[2.5rem] md:h-[4rem] md:w-[4rem] lg:h-[5.875rem] lg:w-[5.875rem] rounded-full play-gradient relative flex items-center justify-center"
-      //   onFocus={handleFocus}
-      //   onBlur={handleBlur}
-      //   onKeyDown={handleKeydown}
-      //   tabIndex={isFocused ? 1 : 0}
+      onKeyDown={handleKeydown}
+      onClick={() => setShowMenu(!showMenu)}
     >
       <span
         role="button"

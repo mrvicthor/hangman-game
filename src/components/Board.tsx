@@ -11,6 +11,8 @@ import BoardHeader from "./BoardHeader";
 import { useGame } from "@/hooks/useGame";
 import RenderPhrase from "./RenderPhrase";
 import { alphabets } from "@/helpers";
+import { MenuProvider } from "@/context/MenuContext";
+import MenuModal from "./MenuModal";
 
 // import RenderPhrase from "./RenderPhrase";
 const MAX_MISTAKES = 8;
@@ -98,41 +100,44 @@ const Board = ({ data, title }: Props) => {
 
   if (!mounted) return null;
   return (
-    <section className="flex flex-col gap-8">
-      <BoardHeader title={title} health={progressBarWidth} />
-      <div className="flex gap-4 justify-center flex-wrap">
-        <RenderPhrase
-          phrase={phrase}
-          hiddenLetters={hiddenLetters}
-          shouldShowLetter={shouldShowLetter}
-        />
-      </div>
-
-      <div className="mt-16">
-        <div
-          ref={gridRef}
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-          aria-label="Alphabet Grid"
-          role="grid"
-          className="grid grid-cols-9 gap-y-4 gap-x-2 md:gap-x-4"
-        >
-          {alphabets.map((letter, index) => (
-            <Square
-              key={index}
-              value={letter}
-              tabIndex={index === selectedIndex ? 0 : -1}
-              onSquareClick={() => handleGuess(letter)}
-              classes={`${
-                phrase.toUpperCase().split("").includes(letter) &&
-                !hiddenLetters.has(letter) &&
-                "opacity-20"
-              } ${index === selectedIndex ? "ring-2 ring-[#261676]" : ""}`}
-            />
-          ))}
+    <MenuProvider>
+      <section className="flex flex-col gap-8">
+        <BoardHeader title={title} health={progressBarWidth} />
+        <div className="flex gap-4 justify-center flex-wrap">
+          <RenderPhrase
+            phrase={phrase}
+            hiddenLetters={hiddenLetters}
+            shouldShowLetter={shouldShowLetter}
+          />
         </div>
-      </div>
-    </section>
+
+        <div className="mt-16">
+          <div
+            ref={gridRef}
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
+            aria-label="Alphabet Grid"
+            role="grid"
+            className="grid grid-cols-9 gap-y-4 gap-x-2 md:gap-x-4"
+          >
+            {alphabets.map((letter, index) => (
+              <Square
+                key={index}
+                value={letter}
+                tabIndex={index === selectedIndex ? 0 : -1}
+                onSquareClick={() => handleGuess(letter)}
+                classes={`${
+                  phrase.toUpperCase().split("").includes(letter) &&
+                  !hiddenLetters.has(letter) &&
+                  "opacity-20"
+                } ${index === selectedIndex ? "ring-2 ring-[#261676]" : ""}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+      <MenuModal />
+    </MenuProvider>
   );
 };
 
