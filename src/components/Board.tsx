@@ -136,7 +136,7 @@ const Board = ({ data, title }: Props) => {
           </div>
         </div>
       </section>
-      <MenuModal />
+      <MenuModal handleNewGame={startNewGame} />
     </MenuProvider>
   );
 };

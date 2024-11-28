@@ -4,54 +4,30 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/assets/images/logo.svg";
 import play from "../../public/assets/images/icon-play.svg";
+import { useMenuNavigation } from "@/hooks/useMenuNavigation";
 
 const Menu = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  // const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const menuItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const menuItems = [
+    { href: "/category", label: "Play" },
+    { href: "/howToPlay", label: "How to Play" },
+  ];
+  const totalItems = menuItems.length;
+  const { activeIndex } = useMenuNavigation({
+    totalItems,
+    menuItemsRef,
+  });
 
   const setMenuItemsRef: (index: number) => RefCallback<HTMLAnchorElement> =
     (index) => (el) => {
       menuItemsRef.current[index] = el;
     };
-  const menuItems = [
-    { href: "/category", label: "Play" },
-    { href: "/howToPlay", label: "How to Play" },
-  ];
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(e.key)) {
-        e.preventDefault();
-      }
-      switch (e.key) {
-        case "ArrowUp":
-        case "ArrowRight":
-          setActiveIndex((prev) =>
-            prev === menuItems.length - 1 ? 0 : prev + 1
-          );
-
-          break;
-        case "ArrowDown":
-        case "ArrowLeft":
-          setActiveIndex((prev) =>
-            prev === 0 ? menuItems.length - 1 : prev - 1
-          );
-
-          break;
-        case "Enter":
-          menuItemsRef.current[activeIndex]?.click();
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [menuItems.length, activeIndex]);
 
   useEffect(() => {
     menuItemsRef.current[activeIndex]?.focus();
