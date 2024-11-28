@@ -1,11 +1,13 @@
 import React, { useRef, KeyboardEvent } from "react";
 import Image from "next/image";
-import { useMenu } from "@/hooks/useMenu";
+// import { useMenu } from "@/hooks/useMenu";
 interface Props {
   imageSrc: string;
+  showMenu: boolean;
+  onToggleMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const MenuButton = ({ imageSrc }: Props) => {
-  const { setShowMenu, showMenu } = useMenu();
+const MenuButton = ({ imageSrc, showMenu, onToggleMenu }: Props) => {
+  // const { setShowMenu, showMenu } = useMenu();
   const menuRef = useRef<HTMLButtonElement | null>(null);
   const handleKeydown = (e: KeyboardEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ const MenuButton = ({ imageSrc }: Props) => {
       ref={menuRef}
       className="cursor-pointer h-[2.5rem] w-[2.5rem] md:h-[4rem] md:w-[4rem] lg:h-[5.875rem] lg:w-[5.875rem] rounded-full play-gradient relative flex items-center justify-center"
       onKeyDown={handleKeydown}
-      onClick={() => setShowMenu(!showMenu)}
+      onClick={() => onToggleMenu(!showMenu)}
     >
       <span
         role="button"

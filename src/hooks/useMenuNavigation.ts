@@ -12,7 +12,6 @@ export const useMenuNavigation = ({
   buttonsControlRef,
 }: Props) => {
   const pathname = usePathname();
-  console.log(pathname, "path");
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -45,6 +44,5 @@ export const useMenuNavigation = ({
 
   return {
     activeIndex,
-    setActiveIndex,
   };
 };

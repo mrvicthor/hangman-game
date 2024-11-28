@@ -1,22 +1,13 @@
 "use client";
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  KeyboardEvent,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Square from "./Square";
 import BoardHeader from "./BoardHeader";
 import { useGame } from "@/hooks/useGame";
 import RenderPhrase from "./RenderPhrase";
 import { alphabets } from "@/helpers";
-import { MenuProvider } from "@/context/MenuContext";
 import MenuModal from "./MenuModal";
 
-// import RenderPhrase from "./RenderPhrase";
 const MAX_MISTAKES = 8;
-// type GameStatus = "playing" | "won" | "lost";
 
 type Props = {
   data: string;
@@ -31,9 +22,10 @@ const Board = ({ data, title }: Props) => {
     phrase,
     progressBarWidth,
     gameStatus,
+    showMenu,
+    setShowMenu,
   } = useGame(data, MAX_MISTAKES);
 
-  console.log(phrase);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const gridRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +38,6 @@ const Board = ({ data, title }: Props) => {
       case "ArrowRight":
         e.preventDefault();
         setSelectedIndex((prev) => (prev === totalLetters - 1 ? 0 : prev + 1));
-
         break;
 
       case "ArrowLeft":
@@ -62,6 +53,7 @@ const Board = ({ data, title }: Props) => {
             : prev % columnsPerRow
         );
         break;
+
       case "ArrowUp":
         e.preventDefault();
         setSelectedIndex((prev) =>
@@ -101,9 +93,14 @@ const Board = ({ data, title }: Props) => {
 
   if (!mounted) return null;
   return (
-    <MenuProvider>
+    <>
       <section className="flex flex-col gap-8">
-        <BoardHeader title={title} health={progressBarWidth} />
+        <BoardHeader
+          title={title}
+          health={progressBarWidth}
+          showMenu={showMenu}
+          handleMenu={setShowMenu}
+        />
         <div className="flex gap-4 justify-center flex-wrap">
           <RenderPhrase
             phrase={phrase}
@@ -137,8 +134,14 @@ const Board = ({ data, title }: Props) => {
           </div>
         </div>
       </section>
-      <MenuModal handleNewGame={startNewGame} gameStatus={gameStatus} />
-    </MenuProvider>
+      <MenuModal
+        handleNewGame={startNewGame}
+        gameStatus={gameStatus}
+        health={progressBarWidth}
+        showMenu={showMenu}
+        handleMenu={setShowMenu}
+      />
+    </>
   );
 };
 

@@ -7,8 +7,15 @@ import MenuButton from "./MenuButton";
 type BoardHeaderProps = {
   title: string;
   health: number;
+  showMenu: boolean;
+  handleMenu: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const BoardHeader = ({ title, health }: BoardHeaderProps) => {
+const BoardHeader = ({
+  title,
+  health,
+  showMenu,
+  handleMenu,
+}: BoardHeaderProps) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -17,7 +24,11 @@ const BoardHeader = ({ title, health }: BoardHeaderProps) => {
   return (
     <header>
       <nav className="flex md:gap-12 gap-6 items-center justify-between">
-        <MenuButton imageSrc="/assets/images/icon-menu.svg" />
+        <MenuButton
+          imageSrc="/assets/images/icon-menu.svg"
+          showMenu={showMenu}
+          onToggleMenu={handleMenu}
+        />
         <h1 className="lg:text-[6.625rem] md:text-[3.625rem] text-[3rem] font-bold text-white mr-auto md:tracking-wide">
           {title}
         </h1>
