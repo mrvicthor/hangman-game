@@ -40,7 +40,7 @@ export const useMenuNavigation = ({
 
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [totalItems, activeIndex]);
+  }, [totalItems, activeIndex, buttonsControlRef, pathname, menuItemsRef]);
 
   return {
     activeIndex,

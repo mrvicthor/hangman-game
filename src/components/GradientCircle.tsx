@@ -9,7 +9,7 @@ interface Props {
 const GradientCircle = ({ imageSrc }: Props) => {
   const backButtonRef = useRef<HTMLAnchorElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
-
+  console.log(isFocused);
   const handleFocus = () => {
     setIsFocused(true);
   };
