@@ -1,5 +1,5 @@
 import React from "react";
-import { getBoardByCategory } from "@/lib/data";
+import { getBoardByCategory } from "../../../../lib/data";
 import Board from "@/components/Board";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {

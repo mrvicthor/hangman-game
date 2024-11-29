@@ -1,4 +1,4 @@
-import { getCategories } from "../../lib/data";
+import { getCategories } from "../../../lib/data";
 
 import CategoryClient from "@/components/CategoryClient";
 
