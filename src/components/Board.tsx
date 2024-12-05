@@ -24,6 +24,7 @@ const Board = ({ data, title }: Props) => {
     gameStatus,
     showMenu,
     setShowMenu,
+    guessedLetters,
   } = useGame(data, MAX_MISTAKES);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -101,7 +102,7 @@ const Board = ({ data, title }: Props) => {
           showMenu={showMenu}
           handleMenu={setShowMenu}
         />
-        <div className="flex gap-4 justify-center flex-wrap">
+        <div className="flex gap-24 md:gap-16 justify-center flex-wrap">
           <RenderPhrase
             phrase={phrase}
             hiddenLetters={hiddenLetters}
@@ -124,6 +125,7 @@ const Board = ({ data, title }: Props) => {
                 value={letter}
                 tabIndex={index === selectedIndex ? 0 : -1}
                 onSquareClick={() => handleGuess(letter)}
+                disable={guessedLetters.has(letter)}
                 classes={`${
                   phrase.toUpperCase().split("").includes(letter) &&
                   !hiddenLetters.has(letter) &&

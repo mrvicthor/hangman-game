@@ -53,3 +53,13 @@ export const alphabets = [
   "Y",
   "Z",
 ];
+
+export const handleShufflePhrase = (phrase: string) => {
+  const uniqueLetters = Array.from(
+    new Set(phrase.replace(/\s/g, "").split(""))
+  );
+
+  // Shuffle array
+  const shuffledLetters = [...uniqueLetters].sort(() => Math.random() - 0.5);
+  return new Set(shuffledLetters);
+};

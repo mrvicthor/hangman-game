@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { generateHiddenLetters, getRandomItemFromCategory } from "@/helpers";
+import {
+  // generateHiddenLetters,
+  getRandomItemFromCategory,
+  handleShufflePhrase,
+} from "@/helpers";
 
 type GameStatus = "Playing" | "Won" | "Lost";
-const REVEAL_PERCENTAGE = 0.7;
+// const REVEAL_PERCENTAGE = 0.7;
 
 export const useGame = (data: string, MAX_MISTAKES: number) => {
   const [guessedLetters, setGuessedLetters] = useState(new Set<string>([" "]));
@@ -15,11 +19,11 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
 
   const startNewGame = (): void => {
     const randomPhrase = getRandomItemFromCategory(JSON.parse(data));
-    const hiddenLetters = generateHiddenLetters(
-      randomPhrase.name,
-      REVEAL_PERCENTAGE
-    );
-
+    // const hiddenLetters = generateHiddenLetters(
+    //   randomPhrase.name,
+    //   REVEAL_PERCENTAGE
+    // );
+    const hiddenLetters = handleShufflePhrase(randomPhrase.name);
     const hiddenLettersToUse = new Set(
       Array.from(hiddenLetters).map((item) => item.toUpperCase())
     );
@@ -44,7 +48,7 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
         Math.max(0, prevState - 100 / MAX_MISTAKES)
       );
       setMistakes(newMistakes);
-      if (mistakes >= MAX_MISTAKES) {
+      if (mistakes === MAX_MISTAKES - 1) {
         setGameStatus("Lost");
         setShowMenu(true);
       }
@@ -73,5 +77,6 @@ export const useGame = (data: string, MAX_MISTAKES: number) => {
     gameStatus,
     showMenu,
     setShowMenu,
+    guessedLetters,
   };
 };
